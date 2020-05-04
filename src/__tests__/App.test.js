@@ -21,14 +21,17 @@ describe("App component", () => {
   it("should be able to add new repository", async () => {
     const { getByText, getByTestId } = render(<App />);
 
-    apiMock.onGet("repositories").reply(200, []);
+    apiMock.onGet("projects").reply(200, []);
 
-    apiMock.onPost("repositories").reply(200, {
-      id: "123",
+    apiMock.onPost("projects").reply(200, {
+      title: "Desafio ReactJS",
+      owner: "Francisco",
+      /* id: "123",
       url: "https://github.com/josepholiveira",
       title: "Desafio ReactJS",
-      techs: ["React", "Node.js"],
+      techs: ["React", "Node.js"], */
     });
+    
 
     await actWait();
 
@@ -44,12 +47,14 @@ describe("App component", () => {
   it("should be able to remove repository", async () => {
     const { getByText, getByTestId } = render(<App />);
 
-    apiMock.onGet("repositories").reply(200, [
+    apiMock.onGet("projects").reply(200, [
       {
-        id: "123",
+        title: "Desafio ReactJS",
+        owner: "Francisco",
+        /* id: "123",
         url: "https://github.com/josepholiveira",
         title: "Desafio ReactJS",
-        techs: ["React", "Node.js"],
+        techs: ["React", "Node.js"], */
       },
     ]);
 
@@ -57,6 +62,7 @@ describe("App component", () => {
 
     await actWait();
 
+    //fireEvent.click(getByTestId("remover"));
     fireEvent.click(getByText("Remover"));
 
     await actWait();
